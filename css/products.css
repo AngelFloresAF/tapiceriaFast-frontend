@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.catalogo {
+    transition: background 0.2s linear;
+    color: var(--color-text);
+    width: 100%;
+    /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1022%26quot%3b)' fill='none'%3e%3cpath d='M342.89 574.04C484.05 549.21 546.6 203.21 776.3 198.79 1006.01 194.37 993.01 268.79 1209.72 268.79 1426.42 268.79 1533.37 199.01 1643.13 198.79' stroke='rgba(255%2c 191%2c 0%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M344.47 578.35C478.17 540.72 434.89 166.99 717.48 166.59 1000.07 166.19 1266.67 415.22 1463.5 418.59' stroke='rgba(255%2c 191%2c 0%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M813.07 601.82C905.73 575.12 875.24 314.58 1070.14 314.27 1265.04 313.96 1448.64 485.55 1584.28 487.87' stroke='rgba(255%2c 191%2c 0%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M305.58 632.12C477.27 631.89 634.12 540.35 985.79 537.37 1337.46 534.39 1483.72 278.71 1666 274.17' stroke='rgba(255%2c 191%2c 0%2c 1)' stroke-width='2'%3e%3c/path%3e%3cpath d='M435.96 576.3C606.89 567.64 713.1 278.72 1046.63 266.91 1380.17 255.1 1494.25 41.06 1657.31 37.31' stroke='rgba(255%2c 191%2c 0%2c 1)' stroke-width='2'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1022'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e"); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &>* {
+        padding: 0 16px;
+    }
+
+    .search-bar {
+        display: flex;
+        max-width: 1200px;
+        justify-content: center;
+        margin: 0 auto 40px;
+        width: 100%;
+
+        input {
+            width: 70%;
+            padding: 12px 16px;
+            border-radius: 24px;
+            border: 2px solid var(--color-border);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+
+            &:focus {
+                outline: none;
+                caret-color: var(--color-text);
+                /* caret-shape: underscore; */
+            }
+        }
+
+        @media(max-width: 370px) {
+            input {
+                width: 80%;
+                padding: 10px 16px;
+            }
+        }
+    }
+}
+
+
+.productsContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
+    gap: 24px;
+    justify-items: center;
+    justify-content: center;
+}
+
+.slider-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.slider-image {
+    min-width: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.slider-image.active {
+    opacity: 1;
+}
+
+.product.hidden {
+    display: none !important;
+}
+
+
+.product {
+    width: 250px;
+    height: 280px;
+    border-radius: 12px;
+    mask-image: radial-gradient(circle, white 100%, black 100%);
+
+    color: rgb(0, 0, 0);
+    font-family: 'DM sans';
+    /* box-shadow: 0 0 8px #333; */
+
+    position: relative;
+
+    .slider {
+        min-width: 100%;
+        min-height: 75%;
+        max-height: 75%;
+        /* background-color: hsl(45, 100%, 50%); */
+        background: url('../images/blanco-marmol.webp') no-repeat center/cover;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 75%;
+        overflow: hidden;
+        padding: 16px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+
+            filter: drop-shadow(0 24px 16px black);
+        }
+    }
+
+    p {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 10px;
+        color: white;
+        background-color: #000;
+        border-bottom-left-radius: 12px;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    h4 {
+        height: 25%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        background-color: #000;
+        color: white;
+        padding: 0 20px;
+    }
+
+    &:hover {
+        cursor: pointer;
+
+        .slider-images {
+            img {
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+
+/* Estilos del modal */
+.modal {
+    color: var(--color-black);
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Cuando el modal está visible */
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+    backdrop-filter: blur(6px);
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+@keyframes scale-up-horizontal-center {
+    0% {
+        transform: scaleX(.2)
+    }
+
+    100% {
+        transform: scaleX(1)
+    }
+}
+
+@keyframes scale-up-vertical-center {
+    0% {
+        transform: scaleY(.2)
+    }
+
+    100% {
+        transform: scaleY(1)
+    }
+}
+
+/* Cuando el modal está activo (con la clase 'show') */
+.modal.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+    animation: scale-up-horizontal-center 0.3s;
+
+    @media(max-width: 992px) {
+        animation: scale-up-vertical-center 0.3s;
+    }
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 1000px;
+    max-height: 95%;
+    max-width: 95%;
+    background: var(--color-black);
+    box-shadow: 0 0 12px var(--shadows);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: "Poppins" !important;
+}
+
+.close-modal {
+    position: absolute;
+    top: 0px;
+    right: 15px;
+    font-size: 48px;
+    cursor: pointer;
+    z-index: 1001;
+    color: var(--color-text);
+}
+
+
+.modal-slider {
+    padding: 24px;
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    /* background-color: var(--color-primary); */
+
+    /* background: radial-gradient(circle, hsla(45, 100%, 63%, 1) 0%, hsla(45, 100%, 50%, 1) 100%); */
+
+    background: url('../images/blanco-marmol.webp') no-repeat center/cover;
+
+    .slider-image {
+        width: 100%;
+        filter: drop-shadow(0 40px 24px #111);
+        object-fit: contain;
+    }
+}
+
+
+.modal-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--color-text);
+    padding: 40px;
+    background-color: var(--color-bg);
+    gap: 32px;
+    box-shadow: 0 0 10px #333;
+    z-index: 1;
+
+    &> :first-child {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .modal-title {
+        font-size: 2rem;
+        /* font-family: var(--font-primary); */
+        font-weight: 900;
+        text-transform: initial;
+    }
+
+    &> :last-child {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-price {
+        font-weight: bold;
+        font-size: 2em;
+        display: flex;
+        flex-direction: row;
+        gap: 0;
+        color: var(--color-primary);
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .modal-color-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 30px);
+        grid-gap: 16px;
+        margin-top: 8px;
+    }
+
+    .color-button {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        filter: grayscale(10%);
+
+        &.active {
+            transform: scale(1.1);
+        }
+    }
+
+    .cta-button {
+        padding: 6px 16px;
+        justify-content: center;
+        font-size: 1.1rem;
+        font-weight: 500;
+        background-color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 12px;
+        /* border: 2px solid black; */
+
+        text-decoration: none;
+        font-family: inherit;
+        color: black;
+        /* width: 100%; */
+        max-width: 300px;
+        min-width: 250px;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+
+
+
+
+@media(max-width: 992px) {
+    .modal-content {
+        height: auto;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    .modal-info {
+        width: 100% !important;
+        gap: 24px;
+    }
+
+    .modal-slider {
+        width: 100%;
+        max-height: 400px;
+        align-items: center;
+
+        & img {
+            height: 100%;
+        }
+    }
+
+    .close-modal {
+        color: var(--color-black);
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .catalogo {
+        .cards-container {
+            grid-template-columns: repeat(4, 220px);
+        }
+    }
+
+}
+
+@media (max-width: 576px) {
+    .productsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(165px, 165px));
+        justify-content: space-evenly;
+        gap: 12px;
+    }
+
+    .product {
+        max-width: 165px;
+        max-height: 180px;
+        /* padding: 10px; */
+
+        h4 {
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 8px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+    }
+
+    .modal-slider {
+        max-height: 180px;
+
+        .slider-image {
+            filter: drop-shadow(0 24px 16px #111);
+        }
+    }
+
+    .modal-info {
+        padding: 12px;
+
+        & .modal-title {
+            font-size: 1.3rem;
+        }
+
+        & .modal-color-buttons {
+            margin-top: 8px;
+            grid-template-columns: repeat(auto-fill, 30px);
+            grid-gap: 12px;
+
+            .color-button {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .cta-button {
+            font-size: 1.1rem;
+        }
+
+        .modal-price {
+            font-size: 1.3rem;
+        }
+    }
+}
+
+@media (max-width: 370px) {
+
+    .productsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 150px));
+        gap: 10px;
+    }
+
+    .product {
+        max-width: 150px;
+        max-height: 170px;
+        /* padding: 10px; */
+
+        h4 {
+            font-size: 12px;
+        }
+
+        .content {
+            padding: 6px;
+        }
+    }
+}
