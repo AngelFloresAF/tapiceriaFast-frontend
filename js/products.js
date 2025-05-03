@@ -137,8 +137,7 @@ function openProductModal(product) {
 function loadProducts() {
     const spinner = document.getElementById('loadingSpinner');
     const container = document.getElementById('productsContainer');
-    spinner.style.display = 'block'; // Mostrar el loader
-    container.innerHTML = ''; // Limpiar productos anteriores si los hay
+    // container.innerHTML = '';
 
     fetch(`${API_BASE_URL}/api/productos?fields[0]=title&fields[1]=description&fields[2]=price&populate[colorImage][populate][image][fields][0]=name&populate[colorImage][populate][image][fields][1]=url&populate[colorImage][populate][colorPicker][fields][0]=color`)
         .then(response => response.json())

@@ -894,7 +894,6 @@ footer {
 #loadingSpinner {
     justify-self: center;
     margin: 150px 0 100px;
-    display: none; /* Oculto por defecto */
 }
 
 .loader {
