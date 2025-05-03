@@ -121,7 +121,7 @@ const contactBtn = document.getElementById("contactBtnMain");
 contactBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, me gustaría realizar una consulta.')}`
 
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('.nav a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
       e.preventDefault();
 
