@@ -119,3 +119,23 @@ lazySections.forEach((section) => observer.observe(section));
 
 const contactBtn = document.getElementById("contactBtnMain");
 contactBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, me gustaría realizar una consulta.')}`
+
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      const targetId = this.getAttribute('href');
+
+      if (targetId === "#") {
+          window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+          });
+      } else {
+          document.querySelector(targetId).scrollIntoView({
+              behavior: 'smooth'
+          });
+      }
+  });
+});

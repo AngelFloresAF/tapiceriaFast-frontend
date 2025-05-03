@@ -6,11 +6,20 @@ let allProducts = [];
 
 // Función para filtrar productos
 function filterProducts() {
-    const searchValue = document.getElementById('searchInput').value.toLowerCase();
+    const searchValue = document.getElementById('searchInput').value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
     const products = document.getElementsByClassName('product');
     
     Array.from(products).forEach(product => {
-        const title = product.querySelector('h4').textContent.toLowerCase();
+        const title = product.querySelector('h4').textContent
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+
         title.includes(searchValue) 
             ? product.classList.remove('hidden')
             : product.classList.add('hidden');
