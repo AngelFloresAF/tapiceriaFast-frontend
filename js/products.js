@@ -109,96 +109,91 @@ function openProductModal(product) {
     ctaButton.href = whatsappLink;
 
     // Mostrar el modal
-    modal.classList.add('show');
+    modal.classList.add('show'); // Activar la animación
+
+    // Body no scroll
+    // disableScroll();
+
 
     // Cerrar modal al hacer clic en la X
     modal.querySelector('.close-modal').onclick = () => {
-        modal.classList.remove('show');
+        modal.classList.remove('show'); // Eliminar la animación cuando se cierra el modal
+        // document.body.classList.remove('no-scroll');
+        // enableScroll();
     };
 
     // Cerrar modal al hacer clic fuera del contenido
     window.onclick = (event) => {
         if (event.target === modal) {
-            modal.classList.remove('show');
+            modal.classList.remove('show'); // Eliminar la animación cuando se cierra el modal
+            // document.body.classList.remove('no-scroll');
+            // enableScroll();
         }
     };
 }
 
 
 // Función principal para cargar y mostrar productos
-function renderProducts(products) {
-    const container = document.getElementById('productsContainer');
-    container.innerHTML = '';
-
-    products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.className = 'product';
-        productDiv.innerHTML = `
-            <div class="slider">
-                <div class="slider-images">
-                    ${product.colorImage.map((colorImage, index) => `
-                        <img src="${colorImage.image.url}"
-                            class="slider-image${index === 0 ? ' active' : ''}"
-                            alt="${product.title} - Variante ${index + 1}"
-                            ${index !== 0 ? 'loading="lazy"' : ''}>
-                    `).join('')}
-                </div>
-            </div>
-            <p>$${product.price}</p>
-            <h4>${product.title}</h4>
-        `;
-
-        productDiv.addEventListener('click', () => openProductModal(product));
-        container.appendChild(productDiv);
-    });
-
-    Fancybox.bind('[data-fancybox]', {
-        Thumbs: { type: 'classic' },
-        Toolbar: {
-            display: {
-                left: ['infobar'],
-                middle: ['zoomIn', 'zoomOut', 'toggle1to1'],
-                right: ['slideshow', 'thumbs', 'close'],
-            },
-        },
-    });
-}
-
 function loadProducts() {
     const spinner = document.getElementById('loadingSpinner');
     const container = document.getElementById('productsContainer');
-    spinner.style.display = 'block';
+    // container.innerHTML = '';
 
-    // 1. Mostrar productos guardados si existen
-    const cached = localStorage.getItem('cachedProducts');
-    if (cached) {
-        try {
-            const cachedProducts = JSON.parse(cached);
-            renderProducts(cachedProducts);
-            spinner.style.display = 'none';
-        } catch (err) {
-            console.error('Error al leer localStorage:', err);
-        }
-    }
-
-    // 2. Mientras tanto, intentar cargar desde la API
     fetch(`${API_BASE_URL}/api/productos?fields[0]=title&fields[1]=description&fields[2]=price&populate[colorImage][populate][image][fields][0]=name&populate[colorImage][populate][image][fields][1]=url&populate[colorImage][populate][colorPicker][fields][0]=color`)
         .then(response => response.json())
         .then(data => {
-            allProducts = data.data;
-            renderProducts(data.data);
-            // 3. Guardar en localStorage para la próxima vez
-            localStorage.setItem('cachedProducts', JSON.stringify(data.data));
+            allProducts = data.data; // Almacenar todos los productos
+
+            data.data.forEach(product => {
+                // Crear contenedor del producto
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                            <div class="slider">
+                                <div class="slider-images">
+                                    ${product.colorImage.map((colorImage, index) => `
+                                        <img src="${colorImage.image.url}"
+                                            class="slider-image${index === 0 ? ' active' : ''}"
+                                            alt="${product.title} - Variante ${index + 1}"
+                                            ${index !== 0 ? 'loading="lazy"' : ''}>>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <p>$${product.price}</p>
+                            <h4>${product.title}</h4>
+                `;
+
+                // Agregar evento de clic para abrir el modal
+                productDiv.addEventListener('click', () => openProductModal(product));
+                container.appendChild(productDiv);
+            });
+
+            // Inicializar Fancybox
+            Fancybox.bind('[data-fancybox]', {
+                Thumbs: { type: 'classic' },
+                Toolbar: {
+                    display: {
+                        left: ['infobar'],
+                        middle: ['zoomIn', 'zoomOut', 'toggle1to1'],
+                        right: ['slideshow', 'thumbs', 'close'],
+                    },
+                },
+            });
         })
-        .catch(error => console.error('Error al cargar productos:', error))
+        .catch(error => console.error('Error:', error))
         .finally(() => {
-            spinner.style.display = 'none';
+            spinner.style.display = 'none'; // Ocultar el loader
         });
+        
 }
 
+
+// Cargar productos cuando la página esté lista
 document.addEventListener('DOMContentLoaded', () => {
     loadProducts();
-
+    // lazyLoadProducts();
+    
+    // Configurar el evento de búsqueda
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', filterProducts);
 });
