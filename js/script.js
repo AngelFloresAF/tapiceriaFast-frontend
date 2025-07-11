@@ -1,5 +1,5 @@
 // Variable global para el número de WhatsApp
-const WHATSAPP_NUMBER = "3854031564";
+const WHATSAPP_NUMBER = "3855769999";
 
 const navToggler = document.querySelector(".nav-toggler");
 const navMenu = document.querySelector(".nav");
